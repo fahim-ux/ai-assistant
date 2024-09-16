@@ -9,7 +9,6 @@ import numpy as np
 
 
 chatStr = ""
-# https://youtu.be/Z3ZAJoi4x6Q
 def chat(query):
     global chatStr
     print(chatStr)
@@ -24,7 +23,6 @@ def chat(query):
         frequency_penalty=0,
         presence_penalty=0
     )
-    # todo: Wrap this inside of a  try catch block
     say(response["choices"][0]["text"])
     chatStr += f"{response['choices'][0]['text']}\n"
     return response["choices"][0]["text"]
@@ -43,13 +41,10 @@ def ai(prompt):
         frequency_penalty=0,
         presence_penalty=0
     )
-    # todo: Wrap this inside of a  try catch block
-    # print(response["choices"][0]["text"])
     text += response["choices"][0]["text"]
     if not os.path.exists("Openai"):
         os.mkdir("Openai")
 
-    # with open(f"Openai/prompt- {random.randint(1, 2343434356)}", "w") as f:
     with open(f"Openai/{''.join(prompt.split('intelligence')[1:]).strip() }.txt", "w") as f:
         f.write(text)
 
@@ -59,7 +54,6 @@ def say(text):
 def takeCommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        # r.pause_threshold =  0.6
         audio = r.listen(source)
         try:
             print("Recognizing...")
@@ -75,28 +69,27 @@ if __name__ == '__main__':
     while True:
         print("Listening...")
         query = takeCommand()
-        # todo: Add more sites
+        # Add more sites
         sites = [["youtube", "https://www.youtube.com"], ["wikipedia", "https://www.wikipedia.com"], ["google", "https://www.google.com"],]
         for site in sites:
             if f"Open {site[0]}".lower() in query.lower():
                 say(f"Opening {site[0]} sir...")
                 webbrowser.open(site[1])
-        # todo: Add a feature to play a specific song
         if "open music" in query:
-            musicPath = "/Users/harry/Downloads/downfall-21371.mp3"
+            musicPath = "/Users/Fahim/Downloads/.."
             os.system(f"open {musicPath}")
 
         elif "the time" in query:
-            musicPath = "/Users/harry/Downloads/downfall-21371.mp3"
+            musicPath = "/Users/Fahim/Downloads/.."
             hour = datetime.datetime.now().strftime("%H")
             min = datetime.datetime.now().strftime("%M")
             say(f"Sir time is {hour} bajke {min} minutes")
 
         elif "open facetime".lower() in query.lower():
-            os.system(f"open /System/Applications/FaceTime.app")
+            os.system(f"open /System/Applications/..")
 
         elif "open pass".lower() in query.lower():
-            os.system(f"open /Applications/Passky.app")
+            os.system(f"open /Applications/..")
 
         elif "Using artificial intelligence".lower() in query.lower():
             ai(prompt=query)
